@@ -1,0 +1,107 @@
+{% extends "admin/main.html" %}
+
+{% block title %}Admin panel - Категории{% endblock %}
+
+{% block body %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="/admin">Главная</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="/admin/products">Товары</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Создание нового товара</li>
+    </ol>
+</nav>
+<h3 class="text-center mb-2">Заполните форму</h3>
+<form action="/admin/products/store" method="post">
+
+
+    <div class="form-group">
+        <label for="name">Название</label>
+        <input type="text" class="form-control" name="name" id="name" aria-describedby="nameHelp"
+               placeholder="Введите название">
+        <small id="nameHelp" class="form-text text-muted">Название должно содержать минимум 2 два символа</small>
+    </div>
+
+
+    <div class="form-group">
+        <label for="description">Описание</label>
+        <textarea class="form-control" name="description" id="description" aria-describedby="descriptionHelp"
+                  placeholder="Введите описание" rows="3"></textarea>
+        <!-- <input type="text" class="form-control" name="description" id="description" aria-describedby="descriptionHelp" placeholder="Введите описание">-->
+        <small id="descriptionHelp" class="form-text text-muted">Название должно содержать минимум 2 два символа</small>
+    </div>
+
+
+    <div class="form-group">
+        <label for="brand">Брэнд</label>
+        <input type="text" class="form-control" name="brand" id="brand" aria-describedby="brandHelp" placeholder="Введите брєнд">
+        <small id="brandHelp" class="form-text text-muted">Название должно содержать минимум 2 два символа</small>
+    </div>
+
+
+    <div class="form-group">
+        <label for="code">Код товара</label>
+        <input type="text" class="form-control" name="code" id="code" aria-describedby="codeHelp" placeholder="Введите код">
+        <small id="codeHelp" class="form-text text-muted">Название должно содержать минимум 2 два символа</small>
+    </div>
+
+
+    <div class="form-group">
+        <label for="price">Цена</label>
+        <input type="text" class="form-control" name="price" id="price" aria-describedby="priceHelp"
+               placeholder="Введите название">
+        <small id="priceHelp" class="form-text text-muted">Название должно содержать минимум 2 два символа</small>
+    </div>
+
+
+    <div class="form-group">
+        <label for="availability">Наличие</label>
+        <input type="text" class="form-control" name="availability" id="availability" aria-describedby="availabilityHelp"
+               placeholder="Введите название">
+        <small id="availabilityHelp" class="form-text text-muted">Название должно содержать минимум 2 два символа</small>
+    </div>
+
+
+    <div class="form-group">
+        <label for="category_id">Категория</label>
+        <select class="form-control" id="category_id" name="category_id">
+            {% for category in categories %}
+            <option value={{category.id}}>{{category.name}}</option>
+            {% else %}
+            <tr>
+                <option value="0">Категории не найдены</option>
+            </tr>
+            {% endfor %}
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="is_new">Состояние</label>
+        <select class="form-control" id="is_new" name="is_new">
+            <option value="1">Новый</option>
+            <option value="0">Б/у</option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="is_recommended">Реомендуем</label>
+        <select class="form-control" id="is_recommended" name="is_recommended">
+            <option value="1">Да</option>
+            <option value="0">Нет</option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="status">Статус</label>
+        <select class="form-control" id="status" name="status">
+            <option value="0">Неактивна</option>
+            <option value="1">Активна</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Создать</button>
+</form>
+
+{% endblock %}

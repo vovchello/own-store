@@ -1,0 +1,77 @@
+{% extends "admin/main.html" %}
+
+{% block title %}Admin panel - Товары{% endblock %}
+
+{% block body %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="/admin">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Товары</li>
+    </ol>
+</nav>
+<h3 class="text-center mb-2">Товары</h3>
+<a class="btn btn-success" href="/admin/products/create">+ Добавить товар</a>
+<div class="d-lg-flex  justify-content-center">
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th class=".col-md-1">#</th>
+            <th>Продукт</th>
+            <th class="col-6">Описание</th>
+            <th>Брэнд</th>
+            <th class="col-6">Код</th>
+            <th>Цена</th>
+            <th>Кол</th>
+            <th>Категория</th>
+            <th>Состояние</th>
+            <th>Рекомендуем</th>
+            <th class="col-2">Статус</th>
+            <th class="col-2">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+
+        <tr>
+            <td scope="col">{{ loop.index }}</td>
+            <th scope="col">{{ product.name}}</th>
+            <td>{{ product.description}}</td>
+            <th>{{ product.brand}}</th>
+            <td>{{ product.code}}</td>
+            <th>{{product.price}}</th>
+            <td>{{ product.availability}}</td>
+            {% for category in categories %}
+            {% if product.categoryid == category.id %}
+            <th>{{category.name}}</th>
+            {% endif %}
+            {% endfor %}
+            <td>{{ product.isnew == 1 ? 'Новый' : 'Б/y' }}</td>
+            <th>{{ product.isrecommended  == 1 ? 'Да' : 'Нет' }}</th>
+            <td>{{ product.status == 1 ? 'Активна' : 'Не активна' }}</td>
+            <td scope="col">
+                <a class="btn btn-success"
+                   href="/admin/products/update/{{ product.id }}">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                <a class="btn btn-danger"
+                   href="#" data-toggle="modal" data-target="#confirm-delete"
+                   data-href="/admin/products/delete/{{ product.id }}">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3">Товаров не найдено</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="modal fade" id="confirm-delete"
+         tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        {% include'admin/components/modal_window.html' with {'target' : 'товар'} %}
+    </div>
+</div>
+
+{% endblock %}
