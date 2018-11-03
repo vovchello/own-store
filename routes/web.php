@@ -22,8 +22,8 @@ Route::namespace('Front')->group(function () {
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
     Route::get("product/{product}", 'ProductController@show')->name('front.get.product');
     Route::get('plan','PlanController@index')->name('plan');
-    Route::post('plan/register','PlanController@register')->name('registerPlan');
-
+    Route::post('plan/{id}','PlanController@register')->name('registerPlan');
+    Route::resource('comment', 'CommentController');
 
 });
 Auth::routes();

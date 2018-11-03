@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Shop\Comments\Comment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,4 +33,9 @@ class User extends Authenticatable
     ];
 
     protected $dates = ['trial_ends_at', 'subscription_ends_at'];
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -21,7 +21,7 @@
                         </ul>
 
 
-                        <form action="{{route('registerPlan')}}" method="POST">
+                        <form action="{{route('registerPlan',[1])}}" method="POST">
                             {{csrf_field()}}
                             <script
                                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -50,7 +50,18 @@
                             <li>Priority email support</li>
                             <li>Help center access</li>
                         </ul>
-                       <a href="{{route('registerPlan')}}"> <button type="button" class="btn btn-lg btn-block btn-primary" >Get started</button></a>
+                        <form action="{{route('registerPlan',[1])}}" method="POST">
+                            {{csrf_field()}}
+                            <script
+                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="pk_test_ujRTFB6ZxsHafUxYeIrUzpFa"
+                                    data-amount="1430"
+                                    data-name="Demo Site"
+                                    data-description="Widget"
+                                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                    data-locale="auto">
+                            </script>
+                        </form>
                     </div>
                 </div>
                 <div class="card mb-4 shadow-sm">

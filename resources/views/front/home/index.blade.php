@@ -22,7 +22,7 @@
                                         {{csrf_field()}}
                                             <input type="hidden" name="quantity" value="1" />
                                             <input type="hidden" name="product" value="{{ $product->id }}">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                            <a href = "{{route('front.get.product',[$product->id])}}"><button type="button" class="btn btn-sm btn-outline-secondary">View</button></a>
                                                 <button id="add-to-cart-btn" type="submit" class="btn btn-sm btn-outline-secondary" >
                                                 <i class="fa fa-shopping-cart"></i>
                                                 </button>
