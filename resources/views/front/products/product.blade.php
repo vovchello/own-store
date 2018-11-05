@@ -76,12 +76,7 @@
                                     @endif
 
                                     <div class="form-group">
-                                        <input type="text"
-                                               class="form-control"
-                                               name="quantity"
-                                               id="quantity"
-                                               placeholder="Quantity"
-                                               value="{{ old('quantity') }}" />
+                                        <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Quantity" value="{{ old('quantity') }}" />
                                         <input type="hidden" name="product" value="{{ $product->id }}" />
                                     </div>
                                     <button type="submit" class="btn btn-warning"><i class="fa fa-cart-plus"></i> Add to cart
@@ -94,36 +89,11 @@
             </div>
 
             <div>
-
-                    @foreach($product->comment as $comment)
-                    {{--<p>{{$comment->}}</p>>--}}
-                    <p>{{$comment->description}}</p>
-                    @endforeach
-
-
-                <form action="{{route('comment.store')}}" method ="post">
-                    {{csrf_field()}}
-                    <input type="hidden" name="product" value="{{ $product->id }}">
-                    <div class="form-group">
-                        <label for="text">Your Comment</label>
-                        <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Email</label>
-                            <input name="email" type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="name">Name</label>
-                            <input name="name" type="name" class="form-control" id="inputPassword4" placeholder="Name">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Comment</button>
-                </form>
+                @include('layouts.comments.comments')
             </div>
-
-
-
         </div>
+    @endsection
 
+    @section('js')
+        @include('layouts.comments.js')
     @endsection
