@@ -72,7 +72,8 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                        </div><hr>
+                                        </div>
+
                                     @endif
 
                                     <div class="form-group">
@@ -82,16 +83,16 @@
                                     <button type="submit" class="btn btn-warning"><i class="fa fa-cart-plus"></i> Add to cart
                                     </button>
                                 </form>
-                            </div>
+
+                                @include('layouts.comments.comments')
+                             </div>
                         </div>
                     </div>
+
+                    @include('layouts.comments.commentsoncomment')
+            </div>
                 </div>
             </div>
-
-            <div>
-                @include('layouts.comments.comments')
-            </div>
-        </div>
     @endsection
 
     @section('js')

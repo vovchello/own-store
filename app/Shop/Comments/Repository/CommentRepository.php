@@ -50,6 +50,7 @@ class CommentRepository
         return $this->comment->all();
     }
 
+
     /**
      * @param AddCommentRequest $request
      */
@@ -59,7 +60,6 @@ class CommentRepository
 
         $validated = $request->validated();
 
-//        dd($validated);
 
         if($user->checkauth() != null)
         {
@@ -80,6 +80,7 @@ class CommentRepository
     }
 
 
+
     /**
      * @param $name
      * @param $email
@@ -90,22 +91,54 @@ class CommentRepository
     }
 
 
-    /**
-     * @param $data
-     */
-    private function save($data):void
+    private function saveProductComment($data)
     {
         $comment = $this->comment;
 
         $comment->description = $data['text'];
 
-
         $comment->user_id = $this->userRepository->findUserByEmail($data['email'])->id;
 
-
-        $comment->product_id = $data['product'];
+        $comment->product_id = $data['product_id'];
 
         $comment->save();
     }
+
+    private function saveComentComment($data)
+    {
+        $comment = $this->comment;
+
+        $comment->description = $data['text'];
+
+        $comment->user_id = $this->userRepository->findUserByEmail($data['email'])->id;
+
+        $comment->parent_id = $data['parent_id'];
+
+        $comment->save();
+    }
+
+    public function getParentComments()
+    {
+        return $this->comment->parent()->get();
+    }
+
+    /**
+     * @param $data
+     */
+    private function save($data):void
+    {
+
+//        dd($data);
+
+        if (isset($data['parent_id']))
+        {
+            $this->saveComentComment($data);
+            return ;
+        }
+
+        $this->saveProductComment($data);
+
+    }
+
 
 }

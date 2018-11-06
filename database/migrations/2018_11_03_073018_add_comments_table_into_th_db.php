@@ -16,7 +16,7 @@ class AddCommentsTableIntoThDb extends Migration
         Schema::create('comments', function(Blueprint $table){
             $table->increments('id');
             $table->text('description');
-            $table->unsignedInteger('product_id');
+            $table->integer('product_id')->nullable()->unsigned();
             $table->unsignedInteger('user_id');
             $table->timestamps();
 

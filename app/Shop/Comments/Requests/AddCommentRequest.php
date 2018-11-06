@@ -16,11 +16,11 @@ class AddCommentRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name' => ['nullable'],
-            'email' => ['nullable'],
+            'name' => ['required'],
+            'email' => ['required'],
             'text' => ['required'],
-            'product' =>['nullable'],
-            'comment' => ['nullable']
+            'product_id' =>['nullable'],
+            'parent_id' => ['nullable']
         ];
     }
 }
