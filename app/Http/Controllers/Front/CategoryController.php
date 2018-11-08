@@ -39,13 +39,7 @@ class CategoryController extends Controller
         $categories = $this->categoryRepo->getAll();
 
 
-        $parentCategories = $categories->where('parent_id',null);
-
-//       dd($parentCategories);
-
-        $category = $categories->where('slug', $slug)->first();
-
-//        dd($category->images[0]->src);
+        $parentCategories = $categories->with('subCategory')->where('parent_id',null);
 
         return view('front.categories.category', [
             'category' => $category,

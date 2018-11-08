@@ -5,14 +5,28 @@
     {{--<title>{% block title %}{% endblock %}</title>--}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    @include('layouts.sidebar.sidebarcss')
 </head>
 <body>
 
     @include ('layouts.header')
+    <div class="row">
+        <div class="col">
+            @include('layouts.sidebar.sidebar')
+        </div>
+        <div class="col-7">
+            <div class="container">
+                @yield('body')
+            </div>
+        </div>
 
-    <div class="container">
-        @yield('body')
+        <div class="col">
+
+        </div>
+
+
     </div>
+
 
 
     @include ('layouts.footer')
