@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
 
-    private $cartRepo;
+    private $cartRepository;
 
     /**
      * CartController constructor.
@@ -19,11 +19,10 @@ class CartController extends Controller
      */
 
     private $requiest;
-    public function __construct(CartRepository $cartRepo, Request $requiest)
+    public function __construct(CartRepository $cartRepository, Request $requiest)
     {
-        $this->cartRepo = $cartRepo;
+        $this->cartRepository = $cartRepository;
         $this->requiest = $requiest;
-//        $this->middleware('auth');
     }
 
     /**
@@ -33,18 +32,13 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cartRepo = $this->cartRepo;
-
-        $categories = $cartRepo->getCategories();
-
-        $cartItems = $this->cartRepo->getProducts();
-
-
+        $cartRepository = $this->cartRepository;
+        $categories = $cartRepository->getCategories();
+        $cartItems = $cartRepository->getProducts();
 
         return view('front.cart.cart',[
             'categories' => $categories,
             'cartItems' => $cartItems
-
         ]);
 
     }
@@ -57,8 +51,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $this->cartRepo->addToCart($request);
-//        dd($request);
+        $this->cartRepository->addToCart($request);
         return redirect()->route('cart.index')
         ->with('message', 'Add to cart successful');
     }
@@ -73,9 +66,9 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $repository = $this->cartRepo;
+        $cartRepository = $this->cartRepository;
 
-        $repository->updateQuantity($request,$id);
+        $cartRepository->updateQuantity($request,$id);
 
         return redirect()->route('cart.index')
         ->with('message', 'cart was updated successfully');
@@ -89,7 +82,7 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        $this->cartRepo->deleteProduct($id);
+        $this->cartRepository->deleteProduct($id);
         return redirect()->route('cart.index')
             ->with('message', 'Remove product from cart successful');
     }

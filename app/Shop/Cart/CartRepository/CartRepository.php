@@ -18,6 +18,7 @@ use Illuminate\Support\Collection;
 
 /**
  * Class CartRepository
+ *
  * @package App\Shop\Cart\CartRepository
  */
 class CartRepository implements CartInterface
@@ -26,7 +27,6 @@ class CartRepository implements CartInterface
     /**
      * @var Request
      */
-
     private $productRepo;
 
     /**
@@ -41,6 +41,7 @@ class CartRepository implements CartInterface
 
     /**
      * CartRepository constructor.
+     *
      * @param Category $category
      * @param Request $productRepo
      * @param $categoryRepo
@@ -52,16 +53,6 @@ class CartRepository implements CartInterface
         $this->categoryRepo = $categoryRepo;
         $this->session = $session;
     }
-
-
-    /**
-     * CartController constructor.
-     * @param $categories
-     * @param $products
-     */
-
-
-
 
     /**
      * Returns category collection for navbar
@@ -82,34 +73,21 @@ class CartRepository implements CartInterface
     public function getProducts() :Collection
     {
         $productRepo = $this->productRepo;
-
         $session = $this->session;
-
         $products=collect();
-
-        if (($session->has('cart') )and ( $session->isNotNull('cart')))
-        {
+        if (($session->has('cart')) and ($session->isNotNull('cart'))) {
             $cart = $session->getAll('cart');
-
-            foreach ($cart as $value)
-            {
+            foreach ($cart as $value) {
                 $productCollection = $productRepo->findProductById($value['product_id']);
-
                 $images = $productCollection->images()->get()->first();
-
                 $cover = $images['src'];
-
-                $product = collect
-                ([
+                $product = collect ([
                     'product' => $productCollection,
                     'quantity' => $value['count'],
                     'cover' => $cover,
                 ]);
-
                 $products->push($product->all());
             }
-
-            return $products->sort();
         }
 
         return $products->sort();
@@ -124,36 +102,25 @@ class CartRepository implements CartInterface
     public function addToCart($requiest) :void
     {
         $session = $this->session;
-
         $product = $requiest->input('product');
-
-        if(! ($session->has('cart')))
-        {
+        if(! ($session->has('cart'))) {
             $cartCollection = collect([['product_id'=> $product,'count' => 1]]);
             $session->put('cart',$cartCollection);
+
             return;
         }
-
         $cartCollection = $session->getById('cart');
-
         $param = $cartCollection->where('product_id',$product)->first();
-
         $cartCollection = $cartCollection->where('product_id','<>',$product);
-
-        if(!(is_null($param)))
-        {
+        if (!(is_null($param))) {
             $param['count']=$this->checkQuantaty($param['product_id'],$param['count']++);
             $cartCollection->push(['product_id'=> $product,'count' => $param['count']]);
             $session->put('cart',$cartCollection);
+
             return;
         }
-
         $cartCollection->push(['product_id'=> $product,'count' => 1]);
-
         $session->put('cart',$cartCollection);
-
-
-
     }
 
     /**
@@ -165,11 +132,8 @@ class CartRepository implements CartInterface
     public function updateQuantity($requiest, $id) :void
     {
         $cart = $this->session->getById('cart')->where('product_id','<>',$id);
-
         $quantity = $requiest->input('quantity');
-
         $cart->push(['product_id'=> $id,'count' => $this->checkQuantaty($id,$quantity)]);
-
         $this->session->put('cart',$cart);
 
 
@@ -183,10 +147,7 @@ class CartRepository implements CartInterface
     public function deleteProduct($id):void
     {
         $cart = $this->session->getById('cart')->where('product_id','<>',$id);
-
         $this->session->put('cart',$cart);
-
-
     }
 
     /**
@@ -199,11 +160,9 @@ class CartRepository implements CartInterface
     private function checkQuantaty($id, $inputQuantity)
     {
         $productRepo = $this->productRepo;
-
         $quantity = $productRepo->findProductById($id)->quantity;
+        if ($inputQuantity > $quantity) {
 
-        if($inputQuantity > $quantity)
-        {
             return $quantity;
         }
 

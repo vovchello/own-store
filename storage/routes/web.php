@@ -10,10 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+
 
 Route::namespace('Front')->group(function () {
+
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('cart', 'CartController')->middleware('emptyCart');
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
@@ -21,9 +24,14 @@ Route::namespace('Front')->group(function () {
     Route::get('plan','PlanController@index')->name('plan');
     Route::post('plan/{id}','PlanController@register')->name('registerPlan');
     Route::resource('comment', 'CommentController');
-    Route::post('')->name('search.product');
+    Route::post('search/','SearchController@searchProductByName')->name('search.product');
+
 });
 Auth::routes();
+
 Route::namespace('Auth')->group(function (){
     Route::get("logout", 'LogoutController@index');
+
 });
+//Auth::routs();routs
+

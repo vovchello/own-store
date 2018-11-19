@@ -2,7 +2,6 @@
 
 
     @section('body')
-        <div class="container product">
             <div class="row">
                 <div class="col-md-12">
                     <ol class="breadcrumb">
@@ -92,7 +91,6 @@
                     @include('layouts.comments.commentsoncomment')
             </div>
                 </div>
-            </div>
     @endsection
 
     @section('js')

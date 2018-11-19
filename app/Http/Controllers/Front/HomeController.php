@@ -35,6 +35,15 @@ class HomeController extends Controller
 
         $categories = $this->category->with(['images', 'subCategories'])->parent()->get();
 
+//        foreach($categories as $category){
+//            dump($category->name);
+//            foreach($category->subCategories as $subCategory){
+//                dump($subCategory->name);
+//            }
+//        }
+//        die();
+
+
         $products = $this->productRepo->getAll();
 
 //        dd($categories->subCategories);
