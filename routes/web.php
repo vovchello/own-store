@@ -21,7 +21,7 @@ Route::namespace('Front')->group(function () {
     Route::get('plan','PlanController@index')->name('plan');
     Route::post('plan/{id}','PlanController@register')->name('registerPlan');
     Route::resource('comment', 'CommentController');
-    Route::post('')->name('search.product');
+    Route::post('search/','SearchController@searchProductByName')->name('search.product');
 });
 Auth::routes();
 Route::namespace('Auth')->group(function (){
